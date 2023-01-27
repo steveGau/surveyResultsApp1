@@ -1,0 +1,227 @@
+Deploy Stream Dash App to Render in Python
+
+############### A: run streamlit at local port
+0. cd to the run folder
+cd C:\Users\a2907\Desktop\pyApp\DeepLearning\Render\app1
+
+1. required files at folder
+	app.py
+	Procfile
+	requirements.txt
+	setup.sh
+	
+2. create python files at folder
+	app.py
+
+3. pip install pipreqs
+
+4. pipreqs --encoding=utf8
+
+3. install pipen at folder at pycharm command window
+	pip install pipenv
+	which pipenv
+
+4. pipenv install streamlit panda at pycharm command window
+	pipenv install --skip-lock streamlit panda plotly pillow 
+
+5. to check app.py, run streamlit at local port at pycharm command window
+	streamlit run app.py
+
+6. fix problem: pd.read_excel with xlrd 
+	at pycharm command window
+	pipenv install --upgrade xlrd
+	set PIPENV_IGNORE_VIRTUALENVS=1
+	eidt print() in C:\Users\a2907\Desktop\pyApp\music21\code\venv\Lib\site-packages\xlrd\__init__.py
+	
+############### B: Deploy streamlit Using Heroku
+0. required files at folder
+	app.py
+	Procfile
+	requirements.txt
+	setup.sh
+
+2. Create a new file called Procfile in the root of your directory and add the following code:
+	Procfile
+		web: sh setup.sh && streamlit run app.py
+		
+3. run pipenv run pip freeze to add stuff to requirements.txt (list all the dependencies for your app and add the following code in this file.)
+	pipenv run pip freeze > requirements.txt
+
+4. create setup.sh
+	mkdir -p ~/.streamlit/
+	echo "\
+	[general]\n\
+	email = \"a290772@gmail.com\"\n\
+	" > ~/.streamlit/credentials.toml
+	echo "\
+	[server]\n\
+	headless = true\n\
+	enableCORS=false\n\
+	port = $PORT\n\
+	" > ~/.streamlit/config.toml
+		
+
+
+
+5b. Web: Creating a Git Account
+		
+6b. Web: login github
+		https://github.com/login
+		a290772@gmail.com (3P$)
+			
+7b. create a new repository
+	Under Top Repositories, Click New
+	Repository name = surveyResults
+	Sedcription = Survey Results App
+	PublicAdd a README file
+	Create repository
+
+11b. Local PC:  push the code to that instance using the following commands at pycharm command window, local folder
+	git init
+	git add .
+	git commit -m "Initial Commit Survey Results"
+	git remote add origin https://github.com/steveGau/surveyResultsApp1.git
+	git push -u origin master
+
+
+ERROR: remove Git-2.39.1-64-bit.exe and DeployYourStreamlitAppToRender(FreeHerokuAlternative).mp4 Files
+remote: warning: See http://git.io/iEPt8g for more information.
+remote: warning: File DeployYourStreamlitAppToRender(FreeHerokuAlternative).mp4 is 52.04 MB; this is larger than GitHub's recommended maximum fi
+le size of 50.00 MB
+remote: warning: File Git-2.39.1-64-bit.exe is 50.54 MB; this is larger than GitHub's recommended maximum file size of 50.00 MB
+remote: warning: GH001: Large files detected. You may want to try Git Large File Storage - https://git-lfs.github.com.
+
+
+
+12b. Local PC: Check if it is running at pycharm command window, local folder
+
+9. Create .gitignore file inside your project folder (tells Git which files or folders to ignore in a project) and add these lines into it:
+	venv 
+	*.pyc 
+	.env 
+	.DS_Store (4 separate lines)
+10. Create a Procfile inside same folder and add this line inside:
+	a. web: gunicorn YourAppFileWithout.py:server
+11. Create requirements. Go back to terminal, cd to project folder if necessary, and type:
+	a. pip freeze > requirements.txt
+12. Inside terminal, type the following- (not working) log in through .com 
+	"C:\Program Files\heroku\bin\heroku.cmd" login
+13. Then type- (don’t forget to ensure you have git installed)
+	git init
+14. heroku git:remote -a  AppNameFromStep2
+	"C:\Program Files\heroku\bin\heroku.cmd" git:remote -a plotyahoodailychart
+	(set git remote heroku to   https://plotyahoodailychart.herokuapp.com/ )
+15. 
+
+git init
+"C:\Program Files\heroku\bin\heroku.cmd" git:remote -a plotyahoodailychart
+git add .
+git commit -am "initial launch"
+
+# to install ta-lib on heroku before "git push heroku master"
+https://github.com/numrut/heroku-buildpack-python-talib
+1. remove TA-Lib from your requirements.txt
+2. add 2 commands at terminal
+$ "C:\Program Files\heroku\bin\heroku.cmd" buildpacks:add --index 1 heroku/python
+$ "C:\Program Files\heroku\bin\heroku.cmd" buildpacks:add --index 2 numrut/ta-lib
+
+git push heroku master
+
+
+18. usage:   https://plotyahoodailychart.herokuapp.com/ 
+
+error:
+"C:\Program Files\heroku\bin\heroku.cmd" logs --tail
+
+clone 
+"C:\Program Files\heroku\bin\heroku.cmd" git:clone -a plotyahoodailychart
+cd plotyahoodailychart
+
+#### run bash
+C:\Users\a2907\PycharmProjects\stockPlot>
+"C:\Program Files\heroku\bin\heroku.cmd" login
+"C:\Program Files\heroku\bin\heroku.cmd" run bash
+echo #HOME
+mkdir $HOME/tmp
+pwd
+cd /app/tmp
+cd ..
+ls
+app  bin  dev  etc  lib  lib64  lost+found  proc  sbin  sys  tmp  usr  var
+ls app
+MGK_Close.html  Plot_Yahoo_DailyChart.py  Procfile  requirements.txt  runtime.txt  tmp  VGT_Close.html
+
+@server.route("/download/<path:path>")
+def download(path):
+    """Serve a file from the upload directory."""
+    # send_from_directory(UPLOAD_DIRECTORY, path, as_attachment=True)
+    # os.remove(UPLOAD_DIRECTORY+'/'+path)
+    return send_from_directory(UPLOAD_DIRECTORY, path, as_attachment=True)
+	
+def file_download_link(filename):
+    """Create a Plotly Dash 'A' element that downloads a file from the app."""
+    location = "/download/{}".format(urlquote(filename))
+    return html.A(filename, href=location)
+
+filename: 'junk.html'
+location: '/download/junk.html'
+html.A(filename, href=location)
+A(children='junk.html', href='/download/junk.html')
+
+@server.route("/download/<path:path>")
+
+
+############ UPLOAD_DIRECTORY
+UPLOAD_DIRECTORY = "/project/app_uploaded_files"
+C:\project\app_uploaded_files
+junk11.html
+
+############ Download UPLOAD_DIRECTORY
+@server.route("/download/<path:path>")
+@server.route("/Pictures/<path:path>")
+C:\Users\a2907\Downloads
+junk11.html
+
+
+############ How do I get user IP address in django?
+https://stackoverflow.com/questions/4581789/how-do-i-get-user-ip-address-in-django/4581997#4581997
+#############
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[-1].strip()
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
+	
+get_client_ip(request)
+#############
+
+pip install django-ipware
+# In a view or a middleware where the `request` object is available
+
+from ipware import get_client_ip
+ip, is_routable = get_client_ip(request)
+if ip is None:
+    # Unable to get the client's IP address
+else:
+    # We got the client's IP address
+    if is_routable:
+        # The client's IP address is publicly routable on the Internet
+    else:
+        # The client's IP address is private
+
+# Order of precedence is (Public, Private, Loopback, None)
+
+
+
+
+
+	
+
+
+------------------------------------------------------------------------------------------------
+Since you’re here…
+I’m asking my viewers to support my Dash Plotly educational channel. A growing number of viewers are looking for high quality, professional content on Dash, which is hard to find. I am trying to fill that gap.
+I believe that anyone working with data can benefit from knowing Dash Plotly, which is why I take the complex parts of Dash and break them down into bite-size tutorials for everyone to have.
+My goal is to make this a sustainable project for myself and my viewers, so if you appreciate my channel and are able support its existence, I would be grateful to you. Become my supporter at: https://www.patreon.com/charmingdata 
