@@ -1,25 +1,48 @@
+# cd C:\Users\a2907\Desktop\pyApp\DeepLearning\Render\app1
+# streamlit run app.py
+#
 import pandas as pd
 import streamlit as st
 import plotly.express as px
 from PIL import Image
+import openpyxl
+from openpyxl import load_workbook
 
+# extract Excel Data Create Panda Dataframe
+# df=extractExcelDataCreatePandaData(excel_file,sheet_name,start_col,end_col,header_rows)
+def extractExcelDataCreatePandaData(excel_file,sheet_name,start_col,end_col,header_rows):
+    wb = load_workbook(excel_file, data_only=True)
+    ws = wb[sheet_name]
+    # get header
+    header_title = [cell.value for cell in ws[header_rows]]
+    header_Name = header_title[start_col - 1:end_col]
+    # Create an empty list to hold the data
+    data = []
+    # Iterate through the rows in the selected range
+    for row in ws.iter_rows(min_col=start_col, max_col=end_col, min_row=header_rows + 1, values_only=True):
+        data.append(row)
+    # Create a Pandas DataFrame from the data
+    df = pd.DataFrame(data, columns=header_Name)
+    # data1 = list(map(list, zip(*data))), transpose list
+    return df
+#
 st.set_page_config(page_title='Survey Results')
 st.header('Survey Results 2021')
 st.subheader('Was the tutorial helpful?')
-
-### --- LOAD DATAFRAME
+#
+# extract Excel Data Create Panda Dataframe
 excel_file = 'Survey_Results.xlsx'
 sheet_name = 'DATA'
-
-df = pd.read_excel(excel_file,
-                   sheet_name=sheet_name,
-                   usecols='B:D',
-                   header=3)
-
-df_participants = pd.read_excel(excel_file,
-                                sheet_name= sheet_name,
-                                usecols='F:G',
-                                header=3)
+start_col=2
+end_col=4
+header_rows = 4
+# header_Name = ['Department', 'Age', 'Rating']
+df=extractExcelDataCreatePandaData(excel_file,sheet_name,start_col,end_col,header_rows)
+#
+start_col=6
+end_col=7
+# header_Name = ['Departments', 'Participants']
+df_participants=extractExcelDataCreatePandaData(excel_file,sheet_name,start_col,end_col,header_rows)
 df_participants.dropna(inplace=True)
 
 # --- STREAMLIT SELECTION
